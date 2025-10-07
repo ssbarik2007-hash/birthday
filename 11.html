@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Birthday ❤️</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      overflow: hidden;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
+      background-size: 400% 400%;
+      animation: gradientShift 10s ease infinite;
+      position: relative;
+      cursor: pointer;
+    }
+
+    @keyframes gradientShift {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    .button-container {
+      position: relative;
+      text-align: center;
+    }
+
+    .enter-btn {
+      background-color: white;
+      border: none;
+      padding: 20px 60px;
+      font-size: 24px;
+      font-weight: bold;
+      border-radius: 40px;
+      cursor: pointer;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 0 20px rgba(255, 105, 180, 0.8);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 10px rgba(255, 105, 180, 0.6);
+      }
+
+      50% {
+        box-shadow: 0 0 30px rgba(255, 20, 147, 1);
+      }
+
+      100% {
+        box-shadow: 0 0 10px rgba(255, 105, 180, 0.6);
+      }
+    }
+
+    .panda {
+      position: absolute;
+      top: -120px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 150px;
+      z-index: 2;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+
+      0%,
+      100% {
+        transform: translate(-50%, 0);
+      }
+
+      50% {
+        transform: translate(-50%, -20px);
+      }
+    }
+
+    .countdown {
+      display: none;
+      font-size: 60px;
+      color: white;
+      text-align: center;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .message {
+      display: none;
+      text-align: center;
+      font-size: 40px;
+      color: white;
+      animation: fadeIn 2s ease-in-out;
+      position: relative;
+      z-index: 10;
+    }
+
+    .love-note {
+      font-size: 24px;
+      margin-top: 20px;
+      color: #ffe6f7;
+      animation: typing 4s steps(40, end) 1s forwards;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 3px solid #fff;
+      width: 0;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes typing {
+      from {
+        width: 0;
+      }
+
+      to {
+        width: 100%;
+      }
+    }
+
+    /* 🎁 Heart Gift Box */
+    .gift-box {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      cursor: pointer;
+      z-index: 15;
+      display: none;
+    }
+
+    .gift-image {
+      width: 180px;
+      transition: transform .6s ease, filter .6s ease;
+    }
+
+    .gift-box.open .gift-image {
+      transform: scale(1.2) rotate(-15deg);
+      filter: brightness(1.2);
+    }
+
+    /* Popup Note */
+    .popup-note {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #fff;
+      color: red;
+      font-size: 20px;
+      font-weight: bold;
+      font-family: 'Courier New', Courier, monospace;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+      z-index: 9999;
+      animation: fadeIn 1s ease;
+      cursor: pointer;
+      max-width: 90%;
+      text-align: center;
+    }
+
+    /* Balloons */
+    .balloon {
+      position: absolute;
+      bottom: -100px;
+      font-size: 50px;
+      animation: floatUp 6s linear forwards;
+      z-index: 5;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(-120vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Floating hearts */
+    .heart {
+      position: fixed;
+      font-size: 20px;
+      color: red;
+      pointer-events: none;
+      animation: floatHeart 2s linear forwards;
+    }
+
+    @keyframes floatHeart {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(-80px) scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    /* Fireworks canvas */
+    #fireworks {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 2;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Start screen -->
+  <div class="button-container" id="start-screen">
+    <img class="panda" src="img1panda.png" alt="Cute Panda">
+    <button class="enter-btn" onclick="startCountdown()">Enter</button>
+  </div>
+
+  <!-- Countdown -->
+  <div class="countdown" id="countdown"></div>
+
+  <!-- Surprise message -->
+  <div class="message" id="surprise-message">
+    🎂🎉 Happy Birthday My Love  My dear❤️🐼🎉🎂
+    <p class="love-note">You’re the best part of my life ❤️<br> I never be a kind of person if you are not in my life ❤️<br> ❤️I love you ❤️</p>
+  </div>
+
+  <!-- Heart Gift Box -->
+  <div class="gift-box" id="gift-box">
+    <img src="gift.jpg" alt="Heart Gift Box" class="gift-image">
+  </div>
+  
+  <!-- Popup Note -->
+  <div class="popup-note" id="popup-note">
+    🌸 Phoolon se zyada khoobsurat hai tu,<br>
+    💓 Meri dhadkanon ka ek nasha hai tu.<br>
+    🥳 Janamdin pe tu hamesha muskurati rahe,<br>
+    🌍 Meri duaon ka sabse khaas jahan hai tu.<br><br>
+    🌙 Chand sitare bhi sharma jaayein,<br>
+    ✨ Teri roshni se saara jahan jagmagaye.<br>
+    🎂 Aaj ke din bas yahi armaan hai,<br>
+    😊 Meri jaan hamesha yuhi muskuraye.<br><br>
+    ☀️ Meri har subah ka sapna tum ho,<br>
+    🌌 Meri har raat ka khwab tum ho.<br>
+    💝 Happy Birthday meri zindagi,<br>
+    🌹 Meri duniya ki saari baat tum ho.<br><br>
+    🎉 Khushiyo ki mehfil sajti rahe,<br>
+    🌠 Har khwab tumhara sach banta rahe.<br>
+    💞 Janamdin pe bas itna kehna hai,<br>
+    🤗 Meri zindagi mein tum yunhi rehti rahe.<br><br>
+    💌 🌸 ପ୍ରିୟତମା ତୁମ ପାଇଁ ! Click me ❤️<br>
+  </div>
+
+  <!-- Fireworks canvas -->
+  <canvas id="fireworks"></canvas>
+
+  <!-- Background Music -->
+  <audio id="birthday-song" loop>
+    <source src="birthday_by_liqwyd.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    function startCountdown() {
+      document.getElementById('start-screen').style.display = 'none';
+      const countdownEl = document.getElementById('countdown');
+      countdownEl.style.display = 'block';
+      let count = 3;
+      countdownEl.textContent = count;
+      const interval = setInterval(() => {
+        count--;
+        if (count > 0) countdownEl.textContent = count;
+        else {
+          clearInterval(interval);
+          countdownEl.style.display = 'none';
+          document.getElementById('gift-box').style.display = 'block';
+        }
+      }, 1000);
+    }
+
+    document.getElementById("gift-box").onclick = () => {
+      const giftBox = document.getElementById('gift-box');
+      giftBox.classList.add('open');
+      setTimeout(() => {
+        giftBox.style.display = 'none';
+        document.getElementById('popup-note').style.display = 'block';
+      }, 800);
+    };
+
+    document.getElementById("popup-note").onclick = () => {
+      document.getElementById('popup-note').style.display = 'none';
+      showSurprise();
+    };
+
+    function showSurprise() {
+      const message = document.getElementById('surprise-message');
+      const music = document.getElementById("birthday-song");
+      music.play();
+      message.style.display = 'block';
+
+      // Balloons 🎈🎊🎉
+      const balloonEmojis = ["🎈", "🎊", "🎉"];
+      for (let i = 0; i < 25; i++) {
+        const balloon = document.createElement('div');
+        balloon.classList.add('balloon');
+        balloon.innerHTML = balloonEmojis[Math.floor(Math.random() * balloonEmojis.length)];
+        balloon.style.left = Math.random() * 100 + 'vw';
+        balloon.style.fontSize = (30 + Math.random() * 40) + 'px';
+        balloon.style.animationDuration = (4 + Math.random() * 3) + 's';
+        document.body.appendChild(balloon);
+        setTimeout(() => balloon.remove(), 7000);
+      }
+
+      // Start fireworks 🎆
+      startFireworks();
+    }
+
+    // Floating hearts effect
+    document.addEventListener("mousemove", (e) => {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.textContent = "❤️";
+      heart.style.left = e.pageX + "px";
+      heart.style.top = e.pageY + "px";
+      heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 2000);
+    });
+
+    // 🎆 Fireworks Script
+    const canvas = document.getElementById("fireworks");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const colors = ["#ff0000", "#00ff00", "#0000ff", "#ffff00", "#ff00ff", "#00ffff"];
+
+    function random(min, max) { return Math.random() * (max - min) + min; }
+
+    class Firework {
+      constructor() {
+        this.x = random(0, canvas.width);
+        this.y = canvas.height;
+        this.targetY = random(100, canvas.height / 2);
+        this.speed = 3;
+        this.exploded = false;
+        this.particles = [];
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+      }
+      update() {
+        if (!this.exploded) {
+          this.y -= this.speed;
+          if (this.y <= this.targetY) {
+            this.exploded = true;
+            for (let i = 0; i < 50; i++) this.particles.push(new Particle(this.x, this.y, this.color));
+          }
+        } else this.particles.forEach(p => p.update());
+      }
+      draw() {
+        if (!this.exploded) {
+          ctx.fillStyle = this.color;
+          ctx.beginPath(); ctx.arc(this.x, this.y, 3, 0, Math.PI * 2); ctx.fill();
+        } else this.particles.forEach(p => p.draw());
+      }
+    }
+
+    class Particle {
+      constructor(x, y, color) {
+        this.x = x; this.y = y; this.color = color;
+        this.speedX = random(-3, 3); this.speedY = random(-3, 3);
+        this.life = 100;
+      }
+      update() { this.x += this.speedX; this.y += this.speedY; this.speedY += 0.05; this.life--; }
+      draw() {
+        ctx.fillStyle = this.color; ctx.globalAlpha = this.life / 100;
+        ctx.beginPath(); ctx.arc(this.x, this.y, 2, 0, Math.PI * 2); ctx.fill(); ctx.globalAlpha = 1;
+      }
+    }
+
+    let fireworks = [];
+    function animateFireworks() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      if (Math.random() < 0.05) fireworks.push(new Firework());
+      fireworks.forEach((f, i) => {
+        f.update(); f.draw();
+        if (f.exploded && f.particles.every(p => p.life <= 0)) fireworks.splice(i, 1);
+      });
+      requestAnimationFrame(animateFireworks);
+    }
+    function startFireworks() { animateFireworks(); }
+  </script>
+</body>
+
+</html>
